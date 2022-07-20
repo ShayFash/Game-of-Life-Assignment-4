@@ -1,0 +1,35 @@
+I've used a char ** of size 30 x 50 to make a grid in this assignment. I've also created a function 
+that returns 1 if it is alive or 0 if its dead or the row and column index provided for it were out 
+of bound. This way, the sanity out of bound errors can be avoided, hence no segmentation fault.
+
+
+
+How would your code have to change in order to make the grid a user-defined, custom size?
+
+I would have to re-write the logic that reads from file. Instead of using fgetc for 30 x 50 grid, 
+I'd use a fgetc in a while loop until the EOF. After that, I'll use the '\n' to see where each line 
+ended. And then use the number of characters in the shortest line as my grid's x-axis bound. 
+This can be achieved using a singe char array as '/n' will differentiate between lines.
+
+
+How would your code have to change in order to make the grid ”wrap around”?
+
+I will modify my "int valueAt(int r, int c, char** grid, int rows, int colums);". 
+I will see if the r and c indices passed in this function are out of bound, meaning greater or 
+equal to the number of total rows and columns. If so, I will simply use first or last value for 
+each of this. I'll just have to replace following line:
+
+if ((r>=0 && r<rows && c>=0 && c<colums) == 0) return 0;
+
+With:
+
+if (r >= rows) {
+   r = 0;
+} else if (r < 0) {
+   r = rows-1;
+}
+if (c >= colums) {
+   c = 0;
+} else if (c < 0 {
+   c = colums-1;
+}
